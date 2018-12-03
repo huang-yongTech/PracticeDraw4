@@ -11,6 +11,9 @@ import android.view.View;
 
 import com.hencoder.hencoderpracticedraw4.R;
 
+/**
+ * 矩形裁切
+ */
 public class Practice01ClipRectView extends View {
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     Bitmap bitmap;
@@ -38,6 +41,9 @@ public class Practice01ClipRectView extends View {
         int left = (getWidth() - bitmap.getWidth()) / 2;
         int top = (getHeight() - bitmap.getHeight()) / 2;
 
+        canvas.save();
+        canvas.clipRect(left + 40, top + 40, left - 20 + bitmap.getWidth(), top - 80 + bitmap.getHeight());
         canvas.drawBitmap(bitmap, left, top, paint);
+        canvas.restore();
     }
 }

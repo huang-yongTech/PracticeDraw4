@@ -17,6 +17,9 @@ import android.view.animation.LinearInterpolator;
 
 import com.hencoder.hencoderpracticedraw4.R;
 
+/**
+ * camera糊脸修正
+ */
 public class Practice13CameraRotateHittingFaceView extends View {
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     Bitmap bitmap;
@@ -47,6 +50,8 @@ public class Practice13CameraRotateHittingFaceView extends View {
         animator.setDuration(5000);
         animator.setInterpolator(new LinearInterpolator());
         animator.setRepeatCount(ValueAnimator.INFINITE);
+
+        camera.setLocation(0, 0, -bitmap.getDensity() * 6);
     }
 
     @Override
@@ -61,7 +66,6 @@ public class Practice13CameraRotateHittingFaceView extends View {
         animator.end();
     }
 
-    @SuppressWarnings("unused")
     public void setDegree(int degree) {
         this.degree = degree;
         invalidate();
@@ -78,8 +82,10 @@ public class Practice13CameraRotateHittingFaceView extends View {
 
         camera.save();
         matrix.reset();
+//        camera.translate(0, 0, 100);
         camera.rotateX(degree);
         camera.getMatrix(matrix);
+//        camera.translate(0, 0, -100);
         camera.restore();
         matrix.preTranslate(-centerX, -centerY);
         matrix.postTranslate(centerX, centerY);

@@ -15,6 +15,9 @@ import android.view.animation.LinearInterpolator;
 
 import com.hencoder.hencoderpracticedraw4.R;
 
+/**
+ * 翻页效果
+ */
 public class Practice14FlipboardView extends View {
     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     Bitmap bitmap;
@@ -55,7 +58,6 @@ public class Practice14FlipboardView extends View {
         animator.end();
     }
 
-    @SuppressWarnings("unused")
     public void setDegree(int degree) {
         this.degree = degree;
         invalidate();
@@ -72,8 +74,22 @@ public class Practice14FlipboardView extends View {
         int x = centerX - bitmapWidth / 2;
         int y = centerY - bitmapHeight / 2;
 
+        //绘制上半部分
         canvas.save();
+        canvas.clipRect(0, 0, getWidth(), centerY);
+        canvas.drawBitmap(bitmap, x, y, paint);
+        canvas.restore();
 
+        //绘制翻页部分
+        if (degree < 90) {
+            //旋转小于90度时，绘制下半部分
+            canvas.clipRect(0, centerY, getWidth(), getHeight());
+        } else {
+            //旋转大于90度时，绘制上半部分
+            canvas.clipRect(0, 0, getWidth(), centerY);
+        }
+
+        canvas.save();
         camera.save();
         camera.rotateX(degree);
         canvas.translate(centerX, centerY);
